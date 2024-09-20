@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Video Display</title>
+    <title>YouTube Video Display</title>
     <style>
         body {
             display: flex;
@@ -14,19 +14,21 @@
             background-color: #f0f0f0;
         }
 
-        video {
+        iframe {
             width: 80%;
-            height: auto;
+            height: 80vh;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
     </style>
 </head>
 <body>
 
-    <video controls>
-        <source src="https://www.youtube.com/watch?v=xBG1eVwH_wg" type="video/mp4">
-        Your browser does not support the video tag.
-    </video>
+    <iframe 
+        src="https://www.youtube.com/embed/KJpk0FVhpr4" 
+        frameborder="0" 
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+        allowfullscreen>
+    </iframe>
 
 </body>
 </html>
