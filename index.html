@@ -3,32 +3,66 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>YouTube Video Display</title>
+    <title>YouTube Channel Subscribers</title>
     <style>
         body {
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             height: 100vh;
             margin: 0;
-            background-color: #f0f0f0;
+            background-color: #1a1a1a;
+            color: white;
+            font-family: Arial, sans-serif;
         }
 
-        iframe {
-            width: 80%;
-            height: 80vh;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        .subscriber-info {
+            text-align: center;
+        }
+
+        h1, p {
+            margin: 5px;
         }
     </style>
 </head>
 <body>
 
-    <iframe 
-        src="https://www.youtube.com/embed/KJpk0FVhpr4" 
-        frameborder="0" 
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-        allowfullscreen>
-    </iframe>
+    <div class="subscriber-info">
+        <h1 id="channel-name">Loading channel name...</h1>
+        <p id="subscriber-count">Loading subscriber count...</p>
+    </div>
+
+    <script>
+        // Replace this with your own API key
+        const apiKey = 'AIzaSyBUuC2jjobZpy-DfmS1iv1ZNy-J2ngnCBU';
+        // Replace with the channel ID of the desired YouTube channel
+        const channelId = 'UCBaymBMPEtwol213Hu3K7-A';  // Example: Google Developers Channel
+        const apiUrl = `https://www.googleapis.com/youtube/v3/channels?part=snippet,statistics&id=${channelId}&key=${apiKey}`;
+
+        // Fetch channel data from YouTube API
+        fetch(apiUrl)
+            .then(response => response.json())
+            .then(data => {
+                if (data.items.length > 0) {
+                    const channelData = data.items[0];
+                    const channelName = channelData.snippet.title;
+                    const subscribers = channelData.statistics.subscriberCount;
+
+                    // Update the page with channel name and subscriber count
+                    document.getElementById('channel-name').textContent = channelName;
+                    document.getElementById('subscriber-count').textContent = `${subscribers} subscribers`;
+                } else {
+                    document.getElementById('channel-name').textContent = "Channel not found";
+                    document.getElementById('subscriber-count').textContent = "";
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching channel data:', error);
+                document.getElementById('channel-name').textContent = "Error loading channel";
+                document.getElementById('subscriber-count').textContent = "";
+            });
+    </script>
 
 </body>
 </html>
